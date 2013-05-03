@@ -127,6 +127,7 @@ INSTALLED_APPS = (
     'gestao.modules.localidade',
     'gestao.modules.equipamento',
     'gestao.modules.pneu',
+    'gestao.website',
     # Uncomment the next line to enable admin documentation:
     # 'django.contrib.admindocs',
 )

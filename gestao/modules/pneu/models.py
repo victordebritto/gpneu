@@ -137,8 +137,8 @@ class Reforma(models.Model):
     
 
     class Meta:
-        verbose_name = ('Descarte') # nome singular
-        verbose_name_plural = ('Descartes') # nome plural
+        verbose_name = ('Reforma') # nome singular
+        verbose_name_plural = ('Reformas') # nome plural
         db_table = u'reforma' # nome da tabela
 
     def __unicode__(self):
