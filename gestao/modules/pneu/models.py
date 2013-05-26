@@ -45,6 +45,7 @@ class ModeloPneu(models.Model):
         related_name='medida_do_pneu',
         db_column='id_medida')
     profundidade = models.FloatField()
+    profundade_reforma = models.FloatField()
     nome = models.CharField(max_length=100)
 
     class Meta:

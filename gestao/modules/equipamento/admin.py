@@ -8,7 +8,7 @@
 import datetime
 from django.contrib import admin
 from django.contrib.admin.options import ModelAdmin
-from gestao.modules.equipamento.models import MarcaEquipamento, Tracao, ModeloEquipamento, Frota, Equipamento
+from gestao.modules.equipamento.models import MarcaEquipamento, Tracao, ModeloEquipamento, Familia, Equipamento
 
 
 class MarcaEquipamentoAdmin(admin.ModelAdmin):
@@ -40,33 +40,33 @@ class ModeloEquipamentoAdmin(admin.ModelAdmin):
     ordering = ['nome','id_marca_equipamento']  # menos antes do numero para order by desc
     list_display = ('id_marca_equipamento','nome','id_tracao',)
     list_filter = ('id_marca_equipamento','id_tracao', )
-    raw_id_fields = ('id_marca_equipamento','id_tracao' )
+    raw_id_fields = ('id_marca_equipamento','id_tracao', )
 
-class FrotaAdmin(admin.ModelAdmin):
+class FamiliaAdmin(admin.ModelAdmin):
     class Meta:
-        verbose_name = 'Frota'
+        verbose_name = 'Familia'
 
-    search_fields = ('num_frota',)
-    ordering = ['num_frota']  # menos antes do numero para order by desc
-    list_display = ('id_frota','num_frota','id_filial','descricao',)
-    list_filter = ('id_filial', )
-    raw_id_fields = ('id_filial', )
+    search_fields = ('num_familia','descricao',)
+    ordering = ['num_familia','descricao',]  # menos antes do numero para order by desc
+    list_display = ('id_familia','num_familia','descricao', )
+    #list_filter = ('num_familia', )
+    #raw_id_fields = ('id_familia', )
 
 class EquipamentoAdmin(admin.ModelAdmin):
     class Meta:
         verbose_name = 'Equipamento'
 
     search_fields = ('num_equipamento','placa',)
-    ordering = ['num_equipamento','id_modelo_equipamento','id_frota']  # menos antes do numero para order by desc
+    ordering = ['num_equipamento','id_modelo_equipamento','id_familia']  # menos antes do numero para order by desc
     list_display = ('num_equipamento','placa','id_modelo_equipamento',)
-    list_filter = ('id_modelo_equipamento','id_frota',)
-    raw_id_fields = ('id_frota','id_modelo_equipamento', )
+    list_filter = ('id_modelo_equipamento','id_familia',)
+    raw_id_fields = ('id_familia','id_modelo_equipamento', )
 
 
 admin.site.register(MarcaEquipamento, MarcaEquipamentoAdmin)
 admin.site.register(Tracao, TracaoAdmin)
 admin.site.register(ModeloEquipamento, ModeloEquipamentoAdmin)
-admin.site.register(Frota, FrotaAdmin)
+admin.site.register(Familia, FamiliaAdmin)
 admin.site.register(Equipamento, EquipamentoAdmin)
 
 #{} dicionario

@@ -52,34 +52,39 @@ class ModeloEquipamento(models.Model):
     def __unicode__(self):
         return str(self.nome)
 
-class Frota(models.Model):
-    id_frota = models.AutoField(primary_key=True)
+class Familia(models.Model):
+    id_familia = models.AutoField(primary_key=True)
+    """
     id_filial = models.ForeignKey(Filial, #IntegerField
         related_name='filial_da_frota',
         db_column='id_filial')
-    num_frota = models.IntegerField()
-    descricao = models.TextField()
-
+    """
+    num_familia = models.IntegerField()
+    descricao = models.CharField(max_length=255)
+    
     class Meta:
-        verbose_name = ('Frota') # nome singular
-        verbose_name_plural = ('Frotas') # nome plural
-        db_table = u'frota' # nome da tabela
+        verbose_name = ('Familia') # nome singular
+        verbose_name_plural = ('Familias') # nome plural
+        db_table = u'familia' # nome da tabela
 
     def __unicode__(self):
-        return str(self.num_frota)
+        return str(self.descricao)
 
 
 class Equipamento(models.Model):
     id_equipamento = models.AutoField(primary_key=True)
+    id_filial = models.ForeignKey(Filial, #IntegerField
+        related_name='filial_do_equipamento',
+        db_column='id_filial')
+    id_familia = models.ForeignKey(Familia,
+        related_name='familia_do_equipamento',
+        db_column='id_familia')
     id_modelo_equipamento = models.ForeignKey(ModeloEquipamento,
         related_name='modelo_do_equipamento',
         db_column='id_modelo_equipamento')
-    id_frota = models.ForeignKey(Frota,
-        related_name='frota_do_equipamento',
-        db_column='id_frota')
     num_equipamento = models.CharField(max_length=10)
     placa = models.CharField(max_length=10)
-    descricao = models.TextField()
+    descricao = models.TextField(blank=True)
 
     class Meta:
         verbose_name = ('Equipamento') # nome singular
