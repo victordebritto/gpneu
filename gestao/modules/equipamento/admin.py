@@ -56,9 +56,9 @@ class EquipamentoAdmin(admin.ModelAdmin):
     class Meta:
         verbose_name = 'Equipamento'
 
-    search_fields = ('num_equipamento','placa',)
+    search_fields = ('num_equipamento',)
     ordering = ['num_equipamento','id_modelo_equipamento','id_familia']  # menos antes do numero para order by desc
-    list_display = ('num_equipamento','placa','id_modelo_equipamento',)
+    list_display = ('num_equipamento','horimetro','id_modelo_equipamento',)
     list_filter = ('id_modelo_equipamento','id_familia',)
     raw_id_fields = ('id_familia','id_modelo_equipamento', )
 

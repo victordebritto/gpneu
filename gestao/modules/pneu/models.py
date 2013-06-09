@@ -58,9 +58,7 @@ class ModeloPneu(models.Model):
 
 SITUACAO_PNEU_CHOICES = (
     (1, 'Estoque'),
-    (2, 'Producao'),
-    (3, 'Descartado'),
-    (4, 'Reforma'),
+    (2, 'Equipamento'),
     )
 
 class Pneu(models.Model):
@@ -93,7 +91,7 @@ class Medicao(models.Model):
     profundidade = models.FloatField()
     horimetro = models.FloatField()
     data_medicao = models.DateField()
-    descricao = models.TextField()
+    descricao = models.TextField(blank=True)
     
 
     class Meta:
@@ -134,7 +132,7 @@ class Reforma(models.Model):
     data_saida = models.DateField()
     data_retorno = models.DateField()
     #foto = models.ImageField()
-    descricao = models.TextField()
+    descricao = models.TextField(blank=True)
     
 
     class Meta:

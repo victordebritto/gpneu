@@ -83,7 +83,7 @@ class Equipamento(models.Model):
         related_name='modelo_do_equipamento',
         db_column='id_modelo_equipamento')
     num_equipamento = models.CharField(max_length=10)
-    placa = models.CharField(max_length=10)
+    horimetro = models.FloatField()
     descricao = models.TextField(blank=True)
 
     class Meta:
