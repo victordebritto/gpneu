@@ -1,0 +1,5 @@
+Mudar as nomenclatura dos campos de cadastro que são FK pois todas aparecem com o ID antes e o povo fica louco quando vê.
+Quando feito o descarte de um equipamento o mesmo tem que sumir da listagem dos pneus.
+Quando um pneu for cadastrado em uma reforma sumir da listagem de pneus.
+Na table de EquipamentoPneu será feito o vinculo entre Pneu e Equipamento, quando este vinculo for feito o pneu não pode ser inserido em outro equipamento.
+Que estou lembrando é só isso. Qualquer coisa me liga 31-9280-7239
