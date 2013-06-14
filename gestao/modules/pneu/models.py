@@ -133,7 +133,7 @@ class Reforma(models.Model):
     data_retorno = models.DateField()
     #foto = models.ImageField()
     descricao = models.TextField(blank=True)
-    
+    status = models.BooleanField(default=True)
 
     class Meta:
         verbose_name = ('Reforma') # nome singular

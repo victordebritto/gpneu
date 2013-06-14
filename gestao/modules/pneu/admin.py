@@ -46,6 +46,12 @@ class PneuAdmin(admin.ModelAdmin):
     class Meta:
         verbose_name = 'Pneu'
 
+    def queryset(self, request):
+        q1 = Reforma.objects.filter(status=1).values_list('id_pneu_id', flat=True)
+        q2 = Descarte.objects.all().values_list('id_pneu_id', flat=True)
+        return super(PneuAdmin,self).queryset(request).exclude(id_pneu__in=list(q1)+list(q2))
+        
+
     search_fields = ('num_fogo',)
     ordering = ['num_fogo','id_filial','situacao']  # menos antes do numero para order by desc
     list_display = ('id_pneu','num_fogo','situacao','id_filial','id_modelo_pneu','data_cadastro',)
@@ -78,8 +84,8 @@ class ReformaAdmin(admin.ModelAdmin):
 
     search_fields = ('id_pneu',)
     ordering = ['id_pneu']  # menos antes do numero para order by desc
-    list_display = ('id_pneu','data_saida','data_retorno',)
-    list_filter = ('id_pneu',)
+    list_display = ('id_pneu','data_saida','data_retorno', 'status')
+    list_filter = ('id_pneu', 'status', )
     raw_id_fields = ('id_pneu','id_cidade',)
 
 admin.site.register(MarcaPneu, MarcaPneuAdmin)
