@@ -10,7 +10,8 @@ from django.contrib import admin
 from django.contrib.admin.options import ModelAdmin
 from gestao.modules.localidade.models import Estado, Cidade
 from gestao.modules.filial.models import Filial
-from gestao.modules.pneu.models import MarcaPneu, Medida, ModeloPneu, Pneu, Medicao, Descarte, Reforma
+from gestao.modules.pneu.models import MarcaPneu, Medida, ModeloPneu, Pneu, Medicao, Descarte,\
+    Reforma, Alocacao
 from django.contrib.admin import SimpleListFilter
 from django.db.models import Sum
 
@@ -43,7 +44,7 @@ class EstadoFilter(SimpleListFilter):
         """
         # Compare the requested value (either '80s' or '90s')
         # to decide how to filter the queryset.
-        medicoes = Medicao.objects.values('id_pneu').annotate(total=Sum('medicao'))
+        medicoes = Medicao.objects.values('id_pneu').annotate(total=Sum('profundidade'))
         res = []
         for i in medicoes:
             if self.value() == 'bom' and i['total'] < 300:
@@ -101,7 +102,17 @@ class PneuAdmin(admin.ModelAdmin):
     list_display = ('id_pneu','num_fogo','situacao','id_filial','id_modelo_pneu','data_cadastro',)
     list_filter = ('id_modelo_pneu__id_marca_pneu','situacao','id_filial', )
     raw_id_fields = ('id_filial', 'id_modelo_pneu' )
-    list_filter = (ReformaFilter,)
+    list_filter = (EstadoFilter,)
+
+class AlocacaoAdmin(admin.ModelAdmin):
+    class Meta:
+        verbose_name = 'Alocacao do Pneu'
+
+    search_fields = ('id_equipamento', 'id_pneu')
+    ordering = ['id_equipamento',]  # menos antes do numero para order by desc
+    list_display = ('id_equipamento','id_pneu','data_inicio','data_fim',
+        'eixo','lado','posicao','status')
+    raw_id_fields = ('id_equipamento', 'id_pneu' )
 
 class MedicaoAdmin(admin.ModelAdmin):
     class Meta:
@@ -137,6 +148,7 @@ admin.site.register(MarcaPneu, MarcaPneuAdmin)
 admin.site.register(Medida, MedidaAdmin)
 admin.site.register(ModeloPneu, ModeloPneuAdmin)
 admin.site.register(Pneu, PneuAdmin)
+admin.site.register(Alocacao, AlocacaoAdmin)
 admin.site.register(Medicao, MedicaoAdmin)
 admin.site.register(Descarte, DescarteAdmin)
 admin.site.register(Reforma, ReformaAdmin)
