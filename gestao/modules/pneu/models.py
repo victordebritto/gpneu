@@ -11,6 +11,7 @@ from django.utils.translation import ugettext_lazy as _
 from datetime import date
 from gestao.modules.filial.models import Filial
 from gestao.modules.localidade.models import Estado, Cidade
+from gestao.modules.equipamento.models import Equipamento
 
 class MarcaPneu(models.Model):
     id_marca_pneu = models.AutoField(primary_key=True)
@@ -82,6 +83,35 @@ class Pneu(models.Model):
 
     def __unicode__(self):
         return str(self.num_fogo)
+
+
+class Alocacao(models.Model):
+    id_alocacao = models.AutoField(primary_key=True)
+    id_pneu = models.ForeignKey(Pneu,
+        related_name='id_do_pneu',
+        db_column='id_pneu')
+    id_equipamento = models.ForeignKey(Equipamento,
+        related_name='id_do_equipamento',
+        db_column='id_equipamento')
+    data_inicio = models.DateField()
+    data_fim = models.DateField(blank=True)
+    eixo = models.IntegerField()
+    lado = models.CharField(max_length=1)
+    posicao = models.CharField(max_length=1)
+    status = models.BooleanField(default=True)
+
+    class Meta:
+        verbose_name = ('Alocacao') # nome singular
+        verbose_name_plural = ('Alocacoes') # nome plural
+        db_table = u'alocacao' # nome da tabela
+
+    def __unicode__(self):
+        return str(self.id_pneu)
+
+SITUACAO_PNEU_CHOICES = (
+    (1, 'Estoque'),
+    (2, 'Equipamento'),
+    )
 
 class Medicao(models.Model):
     id_medicao = models.AutoField(primary_key=True)
